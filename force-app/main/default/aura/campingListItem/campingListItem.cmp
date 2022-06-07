@@ -1,0 +1,37 @@
+<aura:component>
+   
+    
+    <aura:attribute name="item" type="camping_item__c" 
+                    required="true"
+                    default="{Name:'Tent', Price__c:100, Quantity__c:1, Packed__c:false}"
+                    />
+    <div class="slds-card slds-p-top--medium">
+        <header class="slds-card__header">
+            <h3 class="slds-text-heading--small">Items</h3>
+        </header>
+        <section class="slds-card__body">
+            <div id="list" class="row">
+                 <lightning:card title="{!v.item.Name}" iconName="standard:scan_card"
+                    class="{!v.item.Packed__c ?
+                           'slds-theme_success' : ''}">
+        Name : <Lightning:formattedText value="{!v.item.Name}" type="Text"/>
+    <lightning:input type="toggle" label="Packed"  
+                     name="togglevalue" checked="{!v.item.Packed__c}"
+                    disabled = "true" />
+    Price : <lightning:formattedNumber value="{!v.item.Price__c}" style="currency"
+                                       currencyCode="USD"
+                                       formatter = "Currency"
+                                       currencyDisplayAs="symbol"/>
+	<br></br>
+    Quantity :<lightning:formattedNumber  value="{! v.item.Quantity__c}"/><br></br>
+
+   
+    </lightning:card>
+            </div>
+        </section>
+    </div>
+   
+    
+     
+    
+</aura:component>

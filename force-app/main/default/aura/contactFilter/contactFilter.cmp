@@ -1,0 +1,29 @@
+<aura:component>
+  <aura:attribute name="searchString" type="sObject[]" default = "[]" />
+
+  <div class="c-container">
+    <lightning:layout verticalAlign="center" class="x-large">
+      <lightning:layoutItem flexibility="auto" padding="around-small">
+        <div class="slds-p-around_small">
+          <div class="row">
+            <h2 class="header">Search for Contacts</h2>
+
+            <lightning:input
+              name="input3"
+              label="Search Contact"
+              placeholder="enter name"
+            />
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+              <lightning:button
+                variant="success"
+                label="Search"
+                title="Search"
+                onclick="{!c.searchContact }"
+              />
+            </lightning:layoutItem>
+          </div>
+        </div>
+      </lightning:layoutItem>
+    </lightning:layout>
+  </div>
+</aura:component>

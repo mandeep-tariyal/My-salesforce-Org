@@ -1,0 +1,141 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" 
+                access="global" 
+                controller="AccountController">
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="searchString" type="String" default = ""/>
+    
+    <aura:attribute name="allContacts" type="List"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default=" "/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+   
+
+    <aura:attribute name="pageList" type="List"/>
+
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    
+    <!-- You must define keyField as 'Id' to save the record back in Salesforce
+ 'onsave' attribute will executed when user clicks on save button -->
+
+
+ <!-- page search Box -->
+ <div class="c-container">
+    <lightning:layout verticalAlign="center" class="x-large">
+      <lightning:layoutItem flexibility="auto" padding="around-small">
+        <div class="slds-p-around_small">
+          <div class="row">
+            <h2 class="header">Search for Contacts</h2>
+
+            <span onkeypress="{!c.keyPressed}">
+              <lightning:input
+                aura:id="searchText"
+                value="{!v.searchString}"
+                name="input3"
+                label="Search Contact"
+                placeholder="enter name"
+              />
+            </span>
+
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+              <lightning:button
+                variant="success"
+                label="Search"
+                title="Search"
+                onclick="{!c.searchContact }"
+              />
+            </lightning:layoutItem>
+          </div>
+        </div>
+      </lightning:layoutItem>
+    </lightning:layout>
+  </div>
+
+ <!-- /page search Box -->
+
+
+ <lightning:layout class="slds-page-header slds-page-header_object-home">
+    <lightning:layoutItem>
+      <lightning:icon
+        iconName="standard:scan_card"
+        alternativeText="My Contact"
+      />
+    </lightning:layoutItem>
+    <lightning:layoutItem padding="horizontal-small">
+      <div class="page-section page-header">
+        <h1 class="slds-text-heading_label">My Contacts</h1>
+      </div>
+     
+    </lightning:layoutItem>
+  </lightning:layout>
+  <div class="slds-align_absolute-center" style="height:5rem">
+    <lightning:button label="Download ALL(CSV)" title=" Download ALL(CSV)" onclick="{! c.handleCSV }"/>
+
+  </div>
+  <div class="slds-global-header__item slds-clearfix" style="width:22%;">
+    <div class="slds-form slds-form_horizontal slds-float_left" style="width:100%;">
+       <h4 class="slds-float_left" style="width:22%;">Select page size</h4> 
+       <lightning:select value = "{!v.pageSize}" name="selectItem" aura:id="selectItem" label="Records" variant="label-hidden" onchange="{!c.chanegPageSize}">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+        </lightning:select>
+    </div>
+</div>  
+    
+    <lightning:card >
+        <lightning:layout multipleRows="true" horizontalAlign="center">
+            <lightning:layoutItem padding="around-small" size="12">
+                <lightning:datatable
+                                     aura:id="accountDataTable"
+                                     columns="{! v.columns }"
+                                     data="{! v.data }"
+                                     keyField="Id"
+                                     hideCheckboxColumn="true"/>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem padding="around-small" flexibility="auto">
+
+                <div class="demo-only" style="padding:0.5rem;background:#b4c0d4 ">
+                    <div class="slds-button-group" role="group">
+
+                <!-- <lightning:button class="slds-button slds-button_inverse" label="First" iconName="utility:left" iconPosition="left"
+                                  onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/> -->
+                <lightning:button class="slds-button slds-button_inverse"  iconName="utility:chevronleft" iconPosition="left"
+                                  onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                <button class="slds-button slds-p-horizontal_xxx-small ">
+                    <a onclick="{!c.processMe}" name="1" 
+                       class="{! (v.currentPageNumber == 1) ? 'slds-button slds-button_success' : 'slds-button'}">1</a>
+                </button>
+                <span class="slds-button slds-p-horizontal_xxx-small">
+                    <a>...</a>
+                </span>
+                
+                <aura:iteration items="{!v.pageList}" var="item">
+                    <button class="slds-button slds-p-horizontal_xxx-small">
+                        <a onclick="{!c.processMe}" name="{!item}" style="color: black;"
+                           class="{! (v.currentPageNumber == item) ? 'slds-button slds-button_success' : 'slds-button'}">{!item}</a>
+                    </button>
+                </aura:iteration>
+                
+                <span class="slds-button slds-p-horizontal_xxx-small">
+                    <a>...</a>
+                </span>
+                <button class="slds-button slds-p-horizontal_xxx-small">
+                    <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                       class="{! (v.currentPageNumber == v.totalPages) ? 'slds-button slds-button_success' : 'slds-button'}">{!v.totalPages}</a>
+                </button>
+                <lightning:button class="slds-button slds-button_inverse" iconName="utility:chevronright" iconPosition="right" 
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                <!-- <lightning:button class="slds-button slds-button_inverse" label="Last" iconName="utility:right" iconPosition="right" 
+                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/> -->
+                                  </div>
+                                  </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+    
+</aura:component>

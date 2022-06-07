@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occupancy__c</fullName>
+    <description>Singlet - Single Bed
+Doublet - Double Bed
+Triplet - Triple Bed</description>
+    <externalId>false</externalId>
+    <label>Occupancy</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Singlet</fullName>
+                <default>false</default>
+                <label>Singlet</label>
+            </value>
+            <value>
+                <fullName>Doublet</fullName>
+                <default>false</default>
+                <label>Doublet</label>
+            </value>
+            <value>
+                <fullName>Triplet</fullName>
+                <default>false</default>
+                <label>Triplet</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
