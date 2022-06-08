@@ -4,7 +4,7 @@
   implements="force:appHostable,flexipage:availableForAllPageTypes"
 >
   <aura:attribute name="workspaceId" type="String" default="" Placeholder = 'WorkId' />
-  <aura:attribute name="reportId" type="String" default="" />
+  <aura:attribute name="reportId" type="String" default="" placeholder = "reportID" />
   <aura:attribute name="errorMessage" type="String" default="" />
 
   <ltng:require
